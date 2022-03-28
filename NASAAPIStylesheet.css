@@ -1,0 +1,92 @@
+/* NASA API Project Stylesheet */
+body {
+    background-color: black;
+    background-image: url(backgroundPattern.png);
+    color: white;
+    font-family: 'Audiowide', cursive;
+    font-size: 12px;
+    padding: 0em;
+    width: 80%;
+}
+footer {
+    font-size: 1em;
+}
+header {
+    height: 80px;
+    padding: 0em;
+    margin: 10px auto;
+}
+h6 {
+    font-size: inherit;
+}
+main {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+#headerImg {
+    width: auto;
+}
+#headerText {
+    font-family: inherit;
+    font-size: 1.4em;
+    font-weight: 900;
+    margin: auto 0 auto 0;
+    width: auto;
+}
+#NASAphoto {
+    border: 5px groove black;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+#videoLink {
+    display: none;
+}
+
+@media only screen and (max-width: 399px) {
+    body { 
+        font-size: 12px;
+    }
+    main { 
+        max-width: 100%;
+    }
+}
+@media only screen and (min-width: 400px) {
+    body { 
+        font-size: 16px;
+    }
+    main { 
+        max-width: 95%;
+    }
+}
+@media only screen and (min-width: 500px) {
+    body { 
+        font-size: 20px;
+    }
+    main { 
+        max-width: 80%;
+    }
+}
+@media only screen and (min-width: 1000px) {
+    body { 
+        font-size: 20px;
+    }
+    header {
+        font-size: 1.3em;
+    }
+    main { 
+        max-width: 70%;
+    }
+}
+@media only screen and (min-width: 1200px) {
+    body { 
+        font-size: 20px;
+    }
+    header {
+        font-size: 1.3em;
+    }
+    main { 
+        max-width: 50%;
+    }
+}
