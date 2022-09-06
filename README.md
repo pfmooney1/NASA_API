@@ -12,9 +12,11 @@ HTML, CSS with grid, VanillaJS
 
 **Roadmap**
 
-Add a "random image" button and function
-Add a tidy design
-Update the date-picker
+-Add a "random image" button and function
+
+-Tidy design
+
+-Update the date-picker
 
 
 **Contact**
