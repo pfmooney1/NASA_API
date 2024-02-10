@@ -5,12 +5,9 @@
 	<title>NASA API Project</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link 
-		rel="stylesheet" 
-		href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" 
-		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" 
-		crossorigin="anonymous">
-	<link rel="stylesheet" href="NASAAPIStylesheet.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	<link rel="stylesheet" href="/files-nasa-api/styles.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
@@ -19,17 +16,21 @@
 <body class="container-fluid">
 	<main class="">
 		<header class="container-lg row align-items-start d-flex flex-row mx-auto p-0">
-			<img id="headerImg" src="solar-system.svg" class="col-sm-3 col-md-1 float-left p-0 mx-0 h-100">
-			<h1 id="headerText" class="col-sm-9 col-md-11 p-0 mx-0 text-left flex-grow-1">NASA's Astronomy <br /> Photo of the Day</h1>
+			<img id="headerImg" src="/files-nasa-api/solar-system.svg"
+				class="col-sm-3 col-md-1 float-left p-0 mx-0 h-100">
+			<h1 id="headerText" class="col-sm-9 col-md-11 p-0 mx-0 text-left flex-grow-1">NASA's Astronomy <br /> Photo
+				of the Day</h1>
 		</header>
 		<div class="btn-group container-sm">
 			<button id="nextButton" onClick="nextPhoto();" class="btn btn-light"> Next </button>
-			<button type="button" class="btn btn-light border" data-toggle="modal" data-target="#selectModal">Select</button>
+			<button type="button" class="btn btn-light border" data-toggle="modal"
+				data-target="#selectModal">Select</button>
 			<button id="backButton" onClick="previousPhoto();" class="btn btn-light"> Back </button>
 		</div>
 		<div id="photoAndCaption">
-			<img id="NASAphoto" src="solar-system.svg" class="image-fluid mx-auto p-0 w-100" />
-			<a href="" rel="noreferrer" id="videoLink" target="_blank" class="mx-auto p-5 w-100 text-center">Click here to open the video in a new tab!</a>
+			<img id="NASAphoto" src="/files-nasa-api/solar-system.svg" class="image-fluid mx-auto p-0 w-100" />
+			<a href="" rel="noreferrer" id="videoLink" target="_blank" class="mx-auto p-5 w-100 text-center">Click here
+				to open the video in a new tab!</a>
 			<h6 id="NASAphotoCaption" class="text-white text-center">Placeholder Caption</h6>
 			<h6 id="NASAphotoCaptionCopyright" class="text-white text-center"></h6>
 			<h6 id="NASAphotoCaptionDescription" class="text-white text-center">Placeholder Description</h6>
@@ -131,7 +132,8 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" data-dismiss="modal" onClick="selectTheDate()">Go!</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						onClick="selectTheDate()">Go!</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -140,12 +142,13 @@
 
 	<footer class="container-lg pt-5">
 		<h6 class="text-white mx-auto text-center pt-2">
-			<a rel="noreferrer" href="https://patrickmooney.tech" class="text-white mx-auto text-center p-0">Link to my website</a>
+			<a rel="noreferrer" href="https://patrickmooney.tech" class="text-white mx-auto text-center p-0">Link to my
+				website</a>
 		</h6>
 		<h6 class="text-white mx-auto text-center p-0">© 2022 Patrick Mooney</h6>
 		<h6 class="text-white mx-auto text-center p-0">Image from NASA's <br> Astronomy Picture of the Day </h6>
 	</footer>
-	<script src="NASAAPIScriptsVanillaVersion.js"></script>
+	<script src="/files-nasa-api/scripts.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
