@@ -15,17 +15,13 @@ const thumbs = "&thumbs=true";
 
 // Disables/Enables the forwards and back buttons
 function DisableEnableNextButtons() {
+	document.getElementById("nextButton").disabled = false;
+	document.getElementById("backButton").disabled = false;
 	if (urlDate == todaysDate) {
 		document.getElementById("nextButton").disabled = true;
 	}
-	else {
-		document.getElementById("nextButton").disabled = false;
-	}
 	if (urlDate == "1995-06-17") {
 		document.getElementById("backButton").disabled = true;
-	}
-	else {
-		document.getElementById("backButton").disabled = false;
 	}
 }
 DisableEnableNextButtons()
@@ -40,30 +36,27 @@ const fetchNASAData = async () => {
 	try {
 		const response = await fetch(`${urlPart1}${api_key}${urlPart3}${urlDate}${thumbs}`)
 		const data = await response.json();
-		const jsondataToGrab = data;
-		// console.log('NASA APOD data', data);
-		document.getElementById("NASAphoto").src = data.url;
-		document.getElementById("NASAphotoCaption").innerHTML = data.title;
+		console.log(data);
+		document.getElementById("photo").src = data.url;
+		document.getElementById("photo-caption").innerHTML = data.title;
 		document.getElementById("videoLink").href = data.url;
+		document.getElementById("photo-date").innerHTML = data.date;
 		if (data.copyright == undefined) {
-			document.getElementById("NASAphotoCaptionCopyright").innerHTML = "";
+			document.getElementById("photo-caption-copyright").innerHTML = "";
 		}
 		else {
-			document.getElementById("NASAphotoCaptionCopyright").innerHTML = "by " + data.copyright;
+			document.getElementById("photo-caption-copyright").innerHTML = "by " + data.copyright;
 		}
-		document.getElementById("NASAphotoCaptionDescription").innerHTML = data.explanation;
-		if (data.media_type == "video") {
-			document.getElementById("NASAphoto").style.display = "none";
+		document.getElementById("photo-description").innerHTML = data.explanation;
+		if (data.media_type === "video") {
+			document.getElementById("photo").style.display = "none";
 			document.getElementById("videoLink").style.display = "block";    
 		}
 		else {
-			document.getElementById("NASAphoto").style.display = "inline-block";
+			document.getElementById("photo").style.display = "inline-block";
 			document.getElementById("videoLink").style.display = "none";    
 		}
-		/* 
-		date: "2021-08-14"
-		media_type: "image"
-		*/
+
 	} catch (error) {
 		console.log(error);
 	}
@@ -140,10 +133,7 @@ function selectTheDate() {
 	selectedMonth = document.getElementById('monthSelector').value;
 	selectedDay = document.getElementById('daySelector').value;
 	// Last possible image is "1995-06-17"
-	if (selectedYear < 1995) {
-		alert("Not a valid date. APOD started on May 17th, 1995")
-	}
-	else if ((selectedYear == 1995) && (selectedMonth < 6)) {
+	if ((selectedYear == 1995) && (selectedMonth < 6)) {
 		alert("Not a valid date. APOD started on May 17th, 1995")
 	}
 	else if ((selectedYear == 1995) && (selectedMonth >= 6) && (selectedDay < 17)) {

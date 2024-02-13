@@ -1,92 +1,162 @@
 /* NASA API Project Stylesheet */
-body {
+
+:root {
+	--font-space: 'Audiowide', sans-serif, monospace;
+	--font-sans: Arial, Helvetica, sans-serif;
+}
+
+
+body.nasa-app {
 	background-color: black;
 	background-image: url(backgroundPattern.png);
 	color: white;
-	font-family: 'Audiowide', cursive;
-	font-size: 12px;
+	font-family: var(--font-space);
+	/* font-size: 12px; */
 	padding: 0em;
-	width: 80%;
-}
-footer {
-	font-size: 1em;
-}
-header {
-	height: 80px;
-	padding: 0em;
-	margin: 10px auto;
-}
-h6 {
-	font-size: inherit;
-}
-main {
-	max-width: 60%;
-	margin: 0 auto;
 }
 
-#headerImg {
-	width: auto;
-}
-#headerText {
+body * {
 	font-family: inherit;
+}
+
+.nasa-app main {
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.nasa-app header {
+	height: fit-content;
+	padding: 0em;
+	margin: 10px auto;
+	flex-wrap: nowrap;
+	order: 1;
+}
+
+.nasa-app .image-container {
+	order: 2;
+}
+
+.nasa-app .controls {
+	order: 3;
+}
+
+@media screen and (min-width: 40em) {
+	.nasa-app .image-container {
+		order: 3;
+	}
+
+	.nasa-app .controls {
+		order: 2;
+	}
+}
+
+.nasa-app footer {
+	font-size: 1em;
+}
+
+.nasa-app header img {
+	width: auto;
+	height: 60px;
+}
+
+@media screen and (min-width: 500px) {
+	.nasa-app header img {
+		height: 75px;
+	}
+}
+
+@media screen and (min-width: 64em) {
+	.nasa-app header img {
+		height: 90px;
+	}
+}
+
+
+.nasa-app #headerText {
 	font-size: 1.4em;
 	font-weight: 900;
-	margin: auto 0 auto 0;
+	margin: auto 0;
 	width: auto;
 }
-#NASAphoto {
+
+.nasa-app #photo {
 	border: 5px groove black;
-	display: block;
-	height: 100%;
-	width: 100%;
+	display: block !important;
+	max-height: 80vh;
+	width: auto;
+	height: fit-content;
+	max-width: 100%;
+	margin-inline: auto;
 }
-#videoLink {
+
+.nasa-app #videoLink {
 	display: none;
 }
 
+.nasa-app #photo-caption {
+	font-size: 1.75em;
+}
+
+.nasa-app .photo-details {
+	order: 4;
+}
+
+.nasa-app .photo-description {
+	/* font-size: 16px; */
+	font-family: var(--font-sans);
+}
+
+.nasa-app #photo-date {
+	/* font-family: var(--font-sans); */
+}
+
+.nasa-app .modal-title {
+	color: black;
+}
+
+.nasa-app .modal select {
+	font-family: var(--font-sans);
+}
+
 @media only screen and (max-width: 399px) {
-	body { 
+	body.nasa-app {
 		font-size: 12px;
 	}
-	main { 
-		max-width: 100%;
-	}
 }
+
+
 @media only screen and (min-width: 400px) {
-	body { 
+	body.nasa-app {
 		font-size: 16px;
 	}
-	main { 
-		max-width: 95%;
-	}
 }
+
+
 @media only screen and (min-width: 500px) {
-	body { 
+	body.nasa-app {
 		font-size: 20px;
 	}
-	main { 
-		max-width: 80%;
-	}
 }
+
+
 @media only screen and (min-width: 1000px) {
-	body { 
+	body.nasa-app {
 		font-size: 20px;
 	}
-	header {
+
+	.nasa-app header {
 		font-size: 1.3em;
-	}
-	main { 
-		max-width: 70%;
 	}
 }
+
+
 @media only screen and (min-width: 1200px) {
-	body { 
+	body.nasa-app {
 		font-size: 20px;
 	}
-	header {
+
+	.nasa-app header {
 		font-size: 1.3em;
-	}
-	main { 
-		max-width: 50%;
 	}
 }
