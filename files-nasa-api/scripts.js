@@ -1,10 +1,15 @@
-/* NASA API Project JS Scripts */
 // Creates a new date object and sets it up for the API
 const newDate = new Date();
 const theCurrentYear = newDate.getFullYear();
 const theCurrentMonth = newDate.getMonth() + 1;
 const theCurrentDayOfTheMonth = newDate.getDate();
 const todaysDate = assembleTheUrlDate(theCurrentYear, theCurrentMonth, theCurrentDayOfTheMonth);
+
+const monthsWith30Days = ["04", "06", "09", "11", 4, 6, 9, 11];
+const monthsWith31Days = ["01", "03", "05", "07", "08", "10", 1, 3, 5, 7, 8, 10];
+
+document.getElementById("datePicker").setAttribute("max", todaysDate);
+document.getElementById("datePicker").setAttribute("value", todaysDate);
 
 // Sets up API quiery
 const urlPart1 = "https://api.nasa.gov/planetary/apod?api_key=";
@@ -14,20 +19,23 @@ let urlDate = todaysDate;
 const thumbs = "&thumbs=true";
 
 // Disables/Enables the forwards and back buttons
-function DisableEnableNextButtons() {
+function disableEnableNextButtons() {
 	document.getElementById("nextButton").disabled = false;
 	document.getElementById("backButton").disabled = false;
 	if (urlDate == todaysDate) {
 		document.getElementById("nextButton").disabled = true;
 	}
-	if (urlDate == "1995-06-17") {
+	if (urlDate == "1995-06-16") {
 		document.getElementById("backButton").disabled = true;
 	}
 }
-DisableEnableNextButtons()
+disableEnableNextButtons()
 
 // Formats the selected date for the API to use
 function assembleTheUrlDate(year, month, day) {
+	if (month.toString().length === 1) {
+		month = "0" + month;
+	}
 	return year + "-" + month + "-" + day;
 }
 
@@ -37,27 +45,36 @@ const fetchNASAData = async () => {
 		const response = await fetch(`${urlPart1}${api_key}${urlPart3}${urlDate}${thumbs}`)
 		const data = await response.json();
 		console.log(data);
-		document.getElementById("photo").src = data.url;
+		if (data.url != undefined) {
+			document.getElementById("photo").src = data.url;
+		}
 		document.getElementById("photo-caption").innerHTML = data.title;
-		document.getElementById("videoLink").href = data.url;
 		document.getElementById("photo-date").innerHTML = data.date;
+		document.getElementById("photo-description").innerHTML = data.explanation;
 		if (data.copyright == undefined) {
 			document.getElementById("photo-caption-copyright").innerHTML = "";
 		}
 		else {
 			document.getElementById("photo-caption-copyright").innerHTML = "by " + data.copyright;
 		}
-		document.getElementById("photo-description").innerHTML = data.explanation;
 		if (data.media_type === "video") {
 			document.getElementById("photo").style.display = "none";
-			document.getElementById("videoLink").style.display = "block";    
+			document.getElementById("video").style.display = "block";
+			document.getElementById("video").setAttribute("src", data.url);
 		}
 		else {
-			document.getElementById("photo").style.display = "inline-block";
-			document.getElementById("videoLink").style.display = "none";    
+			document.getElementById("photo").style.display = "block";
+			document.getElementById("video").style.display = "none";
 		}
+		if (data.code == 404) {
+			document.getElementById("photo").src = "files-nasa-api/observatory.svg";
+			document.getElementById("photo-caption").innerHTML = "NASA does not have a photo for " + urlDate;
+			document.getElementById("photo-description").innerHTML = data.msg;
+			document.getElementById("photo-date").innerHTML = urlDate;
 
+		}
 	} catch (error) {
+		console.log(data);
 		console.log(error);
 	}
 };
@@ -75,11 +92,11 @@ function previousPhoto() {
 			tempMonth = 12;
 			tempYear--;
 		}
-		else if (previousMonth == 1 || previousMonth == 3 || previousMonth == 5 || previousMonth == 7 || previousMonth == 8 || previousMonth == 10) {
+		else if (monthsWith31Days.includes(previousMonth)) {
 			tempDayOfTheMonth = 31;
 			tempMonth--;
 		}
-		else if (previousMonth === 4 || previousMonth === 6 || previousMonth === 9 || previousMonth === 11) {
+		else if (monthsWith30Days.includes(previousMonth)) {
 			tempDayOfTheMonth = 30;
 			tempMonth--;
 		}
@@ -94,7 +111,7 @@ function previousPhoto() {
 	let newURLDate = assembleTheUrlDate(tempYear, tempMonth, tempDayOfTheMonth);
 	urlDate = newURLDate;
 	fetchNASAData();
-	DisableEnableNextButtons()
+	disableEnableNextButtons()
 }
 
 function nextPhoto() {
@@ -102,15 +119,15 @@ function nextPhoto() {
 	let tempYear = urlParts[0];
 	let tempMonth = urlParts[1];
 	let tempDayOfTheMonth = urlParts[2];
-	if ((tempMonth == 1 || tempMonth == 3 || tempMonth == 5 || tempMonth == 7 || tempMonth == 8 || tempMonth == 10) && (tempDayOfTheMonth > 30)) {
+	if ((monthsWith31Days.includes(tempMonth)) && (tempDayOfTheMonth > 30)) {
 		tempDayOfTheMonth = 1;
 		tempMonth++;
 	}
-	else if ((tempMonth == 4 || tempMonth == 6 || tempMonth == 9 || tempMonth == 11) && (tempDayOfTheMonth > 29)) {
+	else if ((monthsWith30Days.includes(tempMonth)) && (tempDayOfTheMonth > 29)) {
 		tempDayOfTheMonth = 1;
 		tempMonth++;
 	}
-	else if (tempMonth == 2 && tempDayOfTheMonth > 27) {
+	else if (tempMonth == "02" && tempDayOfTheMonth > 27) {
 		tempDayOfTheMonth = 1;
 		tempMonth++;
 	}
@@ -125,38 +142,64 @@ function nextPhoto() {
 	let newURLDate = assembleTheUrlDate(tempYear, tempMonth, tempDayOfTheMonth);
 	urlDate = newURLDate;
 	fetchNASAData();
-	DisableEnableNextButtons()
+	disableEnableNextButtons()
 }
 
 function selectTheDate() {
-	selectedYear = document.getElementById('yearSelector').value;
-	selectedMonth = document.getElementById('monthSelector').value;
-	selectedDay = document.getElementById('daySelector').value;
-	// Last possible image is "1995-06-17"
-	if ((selectedYear == 1995) && (selectedMonth < 6)) {
-		alert("Not a valid date. APOD started on May 17th, 1995")
+	if (isNotValidPictureDate()) {
+		return null;
 	}
-	else if ((selectedYear == 1995) && (selectedMonth >= 6) && (selectedDay < 17)) {
-		alert("Not a valid date. APOD started on May 17th, 1995")
+	let datePickerValue = document.getElementById("datePicker").value;
+	urlDate = datePickerValue;
+	fetchNASAData();
+	disableEnableNextButtons();
+}
+
+function isNotValidPictureDate() {
+	// Earliest possible image is "1995-06-16"
+	let datePickerValue = document.getElementById("datePicker").value;
+	let dateParts = datePickerValue.split("-");
+	let selectedYear = dateParts[0];
+	let selectedMonth = dateParts[1];
+	let selectedDay = dateParts[2];
+	console.log(datePickerValue)
+
+
+	if ((selectedYear < 1995)) {
+		alert("Not a valid date. APOD started on June 16th, 1995");
+		return true;
 	}
+	else if ((selectedYear <= 1995) && (selectedMonth < 6)) {
+		alert("Not a valid date. APOD started on June 16th, 1995")
+		return true;
+	}
+	else if ((selectedYear == 1995) && (selectedMonth >= 6) && (selectedDay < 16)) {
+		alert("Not a valid date. APOD started on June 16th, 1995")
+		return true;
+	}
+
+
 	else if (selectedYear > theCurrentYear) {
 		alert("Not a valid date. APOD does not show future photos")
+		return true;
 	}
 	else if ((selectedYear == theCurrentYear) && (selectedMonth > theCurrentMonth)) {
 		alert("Not a valid date. APOD does not show future photos")
+		return true;
 	}
 	else if ((selectedYear == theCurrentYear) && (selectedMonth == theCurrentMonth) && (selectedDay > theCurrentDayOfTheMonth)) {
 		alert("Not a valid date. APOD does not show future photos")
+		return true;
 	}
-	else if ((selectedMonth == 4 || selectedMonth == 6 || selectedMonth == 9 || selectedMonth == 11) && (selectedDay > 30)) {
-		alert("Not a valid date.")
+
+
+	else if ((monthsWith30Days.includes(selectedMonth)) && (selectedDay > 30)) {
+		alert("Not a valid date, bro.")
+		return true;
 	}
 	else if ((selectedMonth == 2) && (selectedDay > 28)) {
 		alert("Not a valid date.")
+		return true;
 	}
-	else {
-		DisableEnableNextButtons()
-		urlDate = assembleTheUrlDate(selectedYear, selectedMonth, selectedDay);
-		fetchNASAData();
-	}
+	return false;
 }
