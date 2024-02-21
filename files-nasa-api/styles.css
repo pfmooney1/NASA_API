@@ -12,12 +12,6 @@ body.nasa-app {
 	font-size: 12px;
 }
 
-/* @media only screen and (max-width: 399px) {
-	body.nasa-app {
-		font-size: 12px;
-	}
-} */
-
 @media only screen and (min-width: 400px) {
 	body.nasa-app {
 		font-size: 16px;
@@ -29,18 +23,6 @@ body.nasa-app {
 		font-size: 20px;
 	}
 }
-
-/* @media only screen and (min-width: 1000px) {
-	body.nasa-app {
-		font-size: 20px;
-	}
-}
-
-@media only screen and (min-width: 1200px) {
-	body.nasa-app {
-		font-size: 20px;
-	}
-} */
 
 body * {
 	font-family: inherit;
@@ -93,12 +75,6 @@ hr {
 	margin: auto 0;
 	width: auto;
 }
-
-/* @media only screen and (min-width: 1200px) {
-	.nasa-app header {
-		font-size: 1.3em;
-	}
-} */
 
 .nasa-app .image-container {
 	order: 2;
