@@ -113,7 +113,7 @@ hr {
 	display: block;
 	max-height: 80vh;
 	width: auto;
-	height: fit-content;
+	height: auto;
 	max-width: 100%;
 	margin-inline: auto;
 }
